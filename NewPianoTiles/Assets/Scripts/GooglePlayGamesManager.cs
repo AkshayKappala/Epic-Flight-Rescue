@@ -11,6 +11,7 @@ public class GooglePlayGamesManager : MonoBehaviour {
     public void Awake()
     {
         IntiGooglePlayGames();
+
     }
 
     void Start()
