@@ -8,6 +8,8 @@ public class BasicTileScript : MonoBehaviour
     [HideInInspector]
     public GameObject greener;
     public bool isdestroying = false;
+    [HideInInspector]
+    public bool isfirsttap=false;
     public TileType Tiletype;
     private AudioClip clip;
     private void Start()
@@ -32,7 +34,7 @@ public class BasicTileScript : MonoBehaviour
     {
         StartVelocity =7+0.01f*GroundScript.score;
         transform.Translate(Vector3.down * Time.deltaTime*StartVelocity);
-        if (GroundScript.live == false)
+        if (GroundScript.live == false || isfirsttap == true)
             this.gameObject.GetComponent<BoxCollider>().enabled = false;
         else if (GroundScript.live == true)
             this.gameObject.GetComponent<BoxCollider>().enabled = true;
@@ -55,7 +57,9 @@ public class BasicTileScript : MonoBehaviour
         }
         else if (Tiletype == TileType.Green)
         {
-            Destroy(this.gameObject.GetComponent<BoxCollider>());
+            //Destroy(this.gameObject.GetComponent<BoxCollider>());
+            isfirsttap = true;
+            gameObject.GetComponent<BoxCollider>().isTrigger = true;
             disappear();
             GroundScript.score++;
         }
@@ -69,9 +73,9 @@ public class BasicTileScript : MonoBehaviour
     }
     void disappear()
     {
-        GameObject parachute = Instantiate(Resources.Load("Parachute"), this.transform.position+new Vector3(0,1,0), Quaternion.identity) as GameObject;
-        parachute.transform.SetParent(this.gameObject.transform);
-        isdestroying = true;
-        Destroy(this.gameObject, 0.5f);
+            GameObject parachute = Instantiate(Resources.Load("Parachute"), this.transform.position + new Vector3(0, 1, 0), Quaternion.identity) as GameObject;
+            parachute.transform.SetParent(this.gameObject.transform);
+            isdestroying = true;
+            Destroy(this.gameObject, 0.5f);
     }
 }
