@@ -17,18 +17,6 @@ public class BasicTileScript : MonoBehaviour
     {
         StartVelocity = 7;
         float position = this.gameObject.transform.position.x;
-      /*  if (Tiletype==TileType.Red)
-        {
-            clip = (AudioClip)Resources.Load("error");
-        }
-        else if (position == -4.07f)
-            clip = (AudioClip)Resources.Load("Sound1");
-        else if (position == -1.36f)
-            clip = (AudioClip)Resources.Load("Sound2");
-        else if (position == 1.36f)
-            clip = (AudioClip)Resources.Load("Sound3");
-        else if (position == 4.06f)
-            clip = (AudioClip)Resources.Load("Sound4");*/
     }
 
     void Update ()
