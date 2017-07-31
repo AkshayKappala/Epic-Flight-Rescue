@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     public static int mute;
+    public static int theme=1;
 
     private void Awake()
     {

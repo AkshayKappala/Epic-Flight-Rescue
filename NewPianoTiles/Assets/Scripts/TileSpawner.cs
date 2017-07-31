@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class TileSpawner : MonoBehaviour
 {
+    public int themenumber;
+    private void Awake()
+    {
+        themenumber = GameController.theme;
+    }
+
     private float positionselection, x,colorselection;
     private void OnTriggerExit(Collider other)
     {
@@ -22,13 +28,13 @@ public class TileSpawner : MonoBehaviour
 
             colorselection = Random.Range(10, 112);
             if (colorselection >= 10 && colorselection < 20)
-                Instantiate(Resources.Load("RescueCharRed"), new Vector3(x, 21.13f, 0), Quaternion.identity);
+                Instantiate(Resources.Load(themenumber+"RescueCharRed"), new Vector3(x, 21.13f, 0), Quaternion.identity);
             else if (colorselection >= 20 && colorselection < 80)
-                Instantiate(Resources.Load("RescueCharGreen"), new Vector3(x, 21.13f, 0), Quaternion.identity);
+                Instantiate(Resources.Load(themenumber+"RescueCharGreen"), new Vector3(x, 21.13f, 0), Quaternion.identity);
             else if (colorselection >= 80 && colorselection < 110)
-                Instantiate(Resources.Load("RescueCharBlue"), new Vector3(x, 21.13f, 0), Quaternion.identity);
+                Instantiate(Resources.Load(themenumber+"RescueCharBlue"), new Vector3(x, 21.13f, 0), Quaternion.identity);
            // else (colorselection >= 110)
            else
-                Instantiate(Resources.Load("Gift"), new Vector3(x, 21.13f, 0), Quaternion.identity);
+                Instantiate(Resources.Load(themenumber+"Gift"), new Vector3(x, 21.13f, 0), Quaternion.identity);
         }
 }

@@ -13,6 +13,11 @@ public class BasicTileScript : MonoBehaviour
     public bool isfirsttap=false;
     public TileType Tiletype;
     private AudioClip clip;
+    public int themenumber;
+    private void Awake()
+    {
+        themenumber = GameController.theme;
+    }
     private void Start()
     {
         StartVelocity = 7;
@@ -62,7 +67,7 @@ public class BasicTileScript : MonoBehaviour
     }
     void disappear()
     {
-            GameObject parachute = Instantiate(Resources.Load("Parachute"), this.transform.position + new Vector3(0, 1, 0), Quaternion.identity) as GameObject;
+            GameObject parachute = Instantiate(Resources.Load(themenumber+"Parachute"), this.transform.position + new Vector3(0, 1, 0), Quaternion.identity) as GameObject;
             parachute.transform.SetParent(this.gameObject.transform);
             isdestroying = true;
             Destroy(this.gameObject, 0.5f);
