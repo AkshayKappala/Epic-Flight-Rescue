@@ -8,15 +8,17 @@ public class TileSpawner : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
      
-            positionselection = Random.Range(1, 5);
-            if (positionselection >= 1 && positionselection < 2)
-                x = -4.07f;
-            else if (positionselection >= 2 && positionselection < 3)
-                x = -1.36f;
-            else if (positionselection >= 3 && positionselection < 4)
-                x = 1.36f;
-            else
-                x = 4.06f;
+            positionselection = Random.Range(1, 6);
+        if (positionselection >= 1 && positionselection < 2)
+            x = -4;
+        else if (positionselection >= 2 && positionselection < 3)
+            x = -2;
+        else if (positionselection >= 3 && positionselection < 4)
+            x = 0;
+        else if (positionselection >= 4 && positionselection < 5)
+            x = 2;
+        else
+            x = 4;
 
             colorselection = Random.Range(1, 11);
             if (colorselection >= 1 && colorselection < 2)

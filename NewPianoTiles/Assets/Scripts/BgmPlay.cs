@@ -6,7 +6,7 @@ public class BgmPlay : MonoBehaviour {
 
     private void Start()
     {
-        if (SoundToggle.mute == 0)
+        if (GameController.mute == 0)
         {
             this.gameObject.GetComponent<AudioSource>().PlayDelayed(2);
         }
