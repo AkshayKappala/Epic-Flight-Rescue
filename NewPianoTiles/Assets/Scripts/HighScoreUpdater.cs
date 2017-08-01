@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class HighScoreUpdater : MonoBehaviour {
-    public int HighScore;
+    public static int HighScore;
     public Text SetHighScore;
 	void Start ()
     {

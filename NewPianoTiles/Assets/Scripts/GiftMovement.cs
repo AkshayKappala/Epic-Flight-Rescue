@@ -9,6 +9,8 @@ public class GiftMovement : MonoBehaviour {
 	}
     private void OnMouseDown()
     {
+        Economy.coins += 50;
+        PlayerPrefs.SetInt("Coins", Economy.coins);
         Destroy(this.gameObject);
         //write coin increment code here
     }
