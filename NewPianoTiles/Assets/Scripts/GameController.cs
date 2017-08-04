@@ -52,6 +52,17 @@ public class GameController : MonoBehaviour
         PlayerPrefs.SetInt("Soundpref", mute); 
     }
 
+    public void ThemeNext()
+    {
+        if (theme == 1)
+            theme = 2;
+    }
+    public void ThemePrevious()
+    {
+        if (theme == 2)
+            theme = 1;
+    }
+
     public void ShopButtonClick()
     {
         //GameObject.Find("Shop").SetActive(true);
