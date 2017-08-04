@@ -6,14 +6,16 @@ using UnityEngine;
 public class BasicTileScript : MonoBehaviour
 {
     public static float StartVelocity;
-    [HideInInspector]
-    public GameObject greener;
+    //[HideInInspector]
+    //public GameObject greener;
     public bool isdestroying = false;
     [HideInInspector]
     public bool isfirsttap=false;
     public TileType Tiletype;
     private AudioClip clip;
     public int themenumber;
+    [HideInInspector]
+    public float surprisenum;
     private void Awake()
     {
         themenumber = GameController.theme;
@@ -22,6 +24,7 @@ public class BasicTileScript : MonoBehaviour
     {
         StartVelocity = 7;
         float position = this.gameObject.transform.position.x;
+        surprisenum = Random.Range(1, 5);
     }
 
     void Update ()
@@ -60,7 +63,10 @@ public class BasicTileScript : MonoBehaviour
         else if (Tiletype == TileType.Blue)
         {
             GroundScript.score++;
-            Tiletype = TileType.Green;
+            if (surprisenum<=3)
+                Tiletype = TileType.Green;
+            else if(surprisenum>3)
+                Tiletype = TileType.Red;
         }
         /*if (SoundToggle.mute == 0)
             AudioSource.PlayClipAtPoint(clip, GameObject.Find("Main Camera").transform.position);*/
