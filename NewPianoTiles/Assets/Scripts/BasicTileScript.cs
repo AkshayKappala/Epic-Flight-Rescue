@@ -13,6 +13,8 @@ public class BasicTileScript : MonoBehaviour
     public bool isfirsttap=false;
     public TileType Tiletype;
     private AudioClip clip;
+    [HideInInspector]
+    public int tapCount=0;
     public int themenumber;
     private void Awake()
     {
@@ -59,8 +61,9 @@ public class BasicTileScript : MonoBehaviour
         }
         else if (Tiletype == TileType.Blue)
         {
-            GroundScript.score++;
-                Tiletype = TileType.Green;
+            bluefunction();
+           // GroundScript.score++;
+              //  Tiletype = TileType.Green;
 
         }
         /*if (SoundToggle.mute == 0)
@@ -72,5 +75,29 @@ public class BasicTileScript : MonoBehaviour
             parachute.transform.SetParent(this.gameObject.transform);
             isdestroying = true;
             Destroy(this.gameObject, 0.5f);
+    }
+    void bluefunction()
+    {
+        tapCount++;
+        GroundScript.score++;
+        if(tapCount==1)
+        {
+            GameObject parachute = Instantiate(Resources.Load(themenumber + "Parachute"), this.transform.position + new Vector3(0, 1, 0), Quaternion.identity) as GameObject;
+            parachute.transform.SetParent(this.gameObject.transform);
+            parachute.transform.localScale *= 0.66f;
+            parachute.transform.position -= new Vector3(0,0.5f,0);
+        }
+        if(tapCount==2)
+        {
+            GameObject parachute2 = Instantiate(Resources.Load(themenumber + "Parachute"), this.transform.position + new Vector3(0, 1, 0), Quaternion.identity) as GameObject;
+
+            parachute2.transform.SetParent(this.gameObject.transform);
+            parachute2.transform.localScale *= 100;
+            parachute2.transform.position += new Vector3(0, 5, 0);
+            isdestroying = true;
+            Destroy(this.gameObject, 0.5f);
+        }
+
+        Tiletype = TileType.Green;
     }
 }

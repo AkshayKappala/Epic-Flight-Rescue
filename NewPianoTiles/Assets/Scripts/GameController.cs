@@ -11,6 +11,9 @@ public class GameController : MonoBehaviour
     public static int mute;
     public static int theme=1;
     public GameObject shop;
+    public GameObject Tutorial1;
+    public GameObject Tutorial2;
+    public GameObject Tutorial3;
     string subject = "Subject text";
     string body = "Actual text (Link)";
 
@@ -20,8 +23,6 @@ public class GameController : MonoBehaviour
     }
     private void Start()
     {
-        
-
         if (mute == 0)
         {
             GameObject.Find("SoundToggle").GetComponent<Toggle>().isOn = true;
@@ -29,6 +30,11 @@ public class GameController : MonoBehaviour
         else if (mute == 1)
         {
             GameObject.Find("SoundToggle").GetComponent<Toggle>().isOn = false;
+        }
+        if (HighScoreUpdater.HighScore == 0)
+        {
+            //write tutorial method here
+            TutorialCall();
         }
     }
 
@@ -86,6 +92,29 @@ public class GameController : MonoBehaviour
         if (Economy.coins >= 200)
         {
             Economy.coins -= 200;
+        }
+    }
+
+    public void TutorialCall()
+    {
+        if (!Tutorial1.activeSelf && !Tutorial2.activeSelf && !Tutorial3.activeSelf)
+        {
+            Tutorial1.SetActive(true);
+            GameObject.Find("TutorialImage1").SetActive(true);
+        }
+        else if (Tutorial1.activeSelf && !Tutorial2.activeSelf && !Tutorial3.activeSelf)
+        {
+            Tutorial1.SetActive(false);
+            Tutorial2.SetActive(true);
+        }
+        else if (!Tutorial1.activeSelf && Tutorial2.activeSelf && !Tutorial3.activeSelf)
+        {
+            Tutorial2.SetActive(false);
+            Tutorial3.SetActive(true);
+        }
+        else if (!Tutorial1.activeSelf && !Tutorial2.activeSelf && Tutorial3.activeSelf)
+        {
+            Tutorial3.SetActive(false);
         }
     }
 

@@ -6,10 +6,14 @@ using UnityEngine.UI;
 public class HighScoreUpdater : MonoBehaviour {
     public static int HighScore;
     public Text SetHighScore;
-	void Start ()
+    private void Awake()
     {
-        HighScore=PlayerPrefs.GetInt("HighScore");
+        HighScore = PlayerPrefs.GetInt("HighScore");
         sethighscore();
+    }
+    void Start ()
+    {
+
     }
 
 	void Update ()
