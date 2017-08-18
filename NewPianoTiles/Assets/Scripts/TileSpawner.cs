@@ -26,7 +26,7 @@ public class TileSpawner : MonoBehaviour
         else
             x = 4;
 
-            colorselection = Random.Range(10, 112);
+            colorselection = Random.Range(10, 132);
             if (colorselection >= 10 && colorselection < 20)
                 Instantiate(Resources.Load(themenumber+"RescueCharRed"), new Vector3(x, 21.13f, 0), Quaternion.identity);
             else if (colorselection >= 20 && colorselection < 80)
@@ -34,7 +34,9 @@ public class TileSpawner : MonoBehaviour
             else if (colorselection >= 80 && colorselection < 110)
                 Instantiate(Resources.Load(themenumber+"RescueCharBlue"), new Vector3(x, 21.13f, 0), Quaternion.identity);
            // else (colorselection >= 110)
-           else
+           else if (colorselection >= 110 && colorselection < 130)
+            Instantiate(Resources.Load(themenumber + "SurpriseChar"), new Vector3(x, 21.13f, 0), Quaternion.identity);
+        else
                 Instantiate(Resources.Load(themenumber+"Gift"), new Vector3(x, 21.13f, 0), Quaternion.identity);
         }
 }

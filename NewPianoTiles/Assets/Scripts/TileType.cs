@@ -1,4 +1,4 @@
 ﻿public enum TileType
 {
-    Red,Green,Blue
+    Red,Green,Blue,Surprise
 }

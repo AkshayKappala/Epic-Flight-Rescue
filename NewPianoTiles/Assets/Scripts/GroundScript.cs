@@ -21,7 +21,7 @@ public class GroundScript : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("RedTag"))
+        if (other.CompareTag("GreenTag")||other.CompareTag("BlueTag"))
         {
             Instantiate(Resources.Load("Gameoverimage"),GameObject.Find("BackgroundImage").transform);
             live = false;

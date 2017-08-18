@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
     }
     private void Start()
     {
+        mute = PlayerPrefs.GetInt("Soundpref");
         if (mute == 0)
         {
             GameObject.Find("SoundToggle").GetComponent<Toggle>().isOn = true;
