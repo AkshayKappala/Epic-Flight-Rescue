@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 public class GameController : MonoBehaviour
 {
     public static int mute;
-    public static int theme=1;
+    public static int theme=2;
     public GameObject shop;
     public GameObject Tutorial1;
     public GameObject Tutorial2;

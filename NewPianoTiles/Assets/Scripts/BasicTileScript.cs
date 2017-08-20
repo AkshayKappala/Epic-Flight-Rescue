@@ -6,16 +6,15 @@ using UnityEngine;
 public class BasicTileScript : MonoBehaviour
 {
     public static float StartVelocity;
-    //[HideInInspector]
-    //public GameObject greener;
+    public float startvelocityref;
     public bool isdestroying = false;
     [HideInInspector]
     public bool isfirsttap=false;
     public TileType Tiletype;
     private AudioClip clip;
-    [HideInInspector]
-    public int tapCount=0;
     public int themenumber;
+    [HideInInspector]
+    public float extraYblue=0;
     private void Awake()
     {
         themenumber = GameController.theme;
@@ -23,12 +22,13 @@ public class BasicTileScript : MonoBehaviour
     private void Start()
     {
         StartVelocity = 7;
+        startvelocityref = StartVelocity;
         float position = this.gameObject.transform.position.x;
     }
 
     void Update ()
     {
-        StartVelocity =7+0.01f*GroundScript.score;
+        StartVelocity =startvelocityref+0.01f*GroundScript.score;
         transform.Translate(Vector3.down * Time.deltaTime*StartVelocity);
         if (GroundScript.live == false || isfirsttap == true)
             this.gameObject.GetComponent<BoxCollider>().enabled = false;
@@ -62,8 +62,6 @@ public class BasicTileScript : MonoBehaviour
         else if (Tiletype == TileType.Blue)
         {
             bluefunction();
-           // GroundScript.score++;
-              //  Tiletype = TileType.Green;
 
         }
         /*if (SoundToggle.mute == 0)
@@ -71,33 +69,23 @@ public class BasicTileScript : MonoBehaviour
     }
     void disappear()
     {
-            GameObject parachute = Instantiate(Resources.Load(themenumber+"Parachute"), this.transform.position + new Vector3(0, 1, 0), Quaternion.identity) as GameObject;
+            GameObject parachute = Instantiate(Resources.Load(themenumber+"Parachute"), this.transform.position + new Vector3(0, 1+extraYblue, 0), Quaternion.identity) as GameObject;
+        extraYblue = 0;
             parachute.transform.SetParent(this.gameObject.transform);
             isdestroying = true;
             Destroy(this.gameObject, 0.5f);
     }
+   
     void bluefunction()
     {
-        tapCount++;
         GroundScript.score++;
-        if(tapCount==1)
-        {
-            GameObject parachute = Instantiate(Resources.Load(themenumber + "Parachute"), this.transform.position + new Vector3(0, 1, 0), Quaternion.identity) as GameObject;
+
+            GameObject parachute = Instantiate(Resources.Load("2Parachute2"), this.transform.position, Quaternion.identity) as GameObject;
             parachute.transform.SetParent(this.gameObject.transform);
-            parachute.transform.localScale *= 0.66f;
-            parachute.transform.position -= new Vector3(0,0.5f,0);
-        }
-        if(tapCount==2)
-        {
-            GameObject parachute2 = Instantiate(Resources.Load(themenumber + "Parachute"), this.transform.position + new Vector3(0, 1, 0), Quaternion.identity) as GameObject;
-
-            parachute2.transform.SetParent(this.gameObject.transform);
-            parachute2.transform.localScale *= 100;
-            parachute2.transform.position += new Vector3(0, 5, 0);
-            isdestroying = true;
-            Destroy(this.gameObject, 0.5f);
-        }
-
+            //parachute.transform.localScale *= 0.66f;
+            parachute.transform.position += new Vector3(0, 1, 0);
+        extraYblue = 0.75f;
+        startvelocityref = 5;
         Tiletype = TileType.Green;
     }
 }

@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class SurpriseChar : MonoBehaviour
 {
-    public bool isfirsttap = false;
     public static float StartVelocity;
     [HideInInspector]
     public float selector;
-    [HideInInspector]
-    public int touchcount = 0;
-    public bool isdestroying = false;
     public int themenumber;
     private void Awake()
     {
@@ -25,19 +21,15 @@ public class SurpriseChar : MonoBehaviour
     {
         StartVelocity = 7 + 0.01f * GroundScript.score;
         transform.Translate(Vector3.down * Time.deltaTime * StartVelocity);
-        if (GroundScript.live == false || isfirsttap == true)
-            this.gameObject.GetComponent<BoxCollider>().enabled = false;
-        else if (GroundScript.live == true)
-            this.gameObject.GetComponent<BoxCollider>().enabled = true;
     }
-    private void FixedUpdate()
-    {
-        if (isdestroying)
-        {
-            this.gameObject.transform.localScale /= 1.02f;
-        }
-    }
-    private void OnMouseDown()
+    /* private void FixedUpdte()
+     {
+         if (isdestroying)
+         {
+             this.gameObject.transform.localScale /= 1.02f;
+         }
+     }*/
+    /*private void OnMouseDown()
     {
         if (touchcount == 0)
         {
@@ -58,7 +50,7 @@ public class SurpriseChar : MonoBehaviour
         {
             if(this.transform.Find("Innocent").gameObject.activeSelf)
             {
-                
+
                 disappear();
                 GroundScript.score++;
                 isfirsttap = true;
@@ -79,5 +71,18 @@ public class SurpriseChar : MonoBehaviour
         gameObject.GetComponent<BoxCollider>().isTrigger = true;
         isdestroying = true;
         Destroy(this.gameObject, 0.5f);
+    }*/
+
+    private void OnMouseDown()
+    {
+        if(selector<3)
+        {
+            Instantiate(Resources.Load(themenumber + "RescueCharRed"), this.transform.position, Quaternion.identity);
+        }
+        else
+        {
+            Instantiate(Resources.Load(themenumber + "RescueCharGreen"), this.transform.position, Quaternion.identity);
+        }
+        Destroy(this.gameObject);
     }
 }

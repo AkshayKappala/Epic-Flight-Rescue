@@ -40,7 +40,7 @@ public class GamePlayController : MonoBehaviour
     IEnumerator storkcreation()
     {
         yield return new WaitForSeconds(10+Random.Range(0,60));
-        Instantiate(Resources.Load("Stork"), new Vector3(10,Random.Range(-5,5), 0), Quaternion.identity);
+        Instantiate(Resources.Load("Stork"),GameObject.Find("BackgroundImage").transform.position + new Vector3(10,Random.Range(-5,5), 0), Quaternion.identity);
         StartCoroutine(storkcreation());
     }
     public void pause()
