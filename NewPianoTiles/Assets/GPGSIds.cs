@@ -22,9 +22,9 @@
 ///
 
 
-/*public static class GPGSIds
+public static class GPGSIds
 {
         public const string leaderboard_rescue_stars = "CgkIpeiRn58REAIQAQ"; // <GPGSID>
 
-}*/
+}
 
