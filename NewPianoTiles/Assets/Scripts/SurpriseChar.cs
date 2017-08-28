@@ -78,12 +78,13 @@ public class SurpriseChar : MonoBehaviour
     {
         if(selector<3)
         {
-            GeneratedChar= Instantiate(Resources.Load(themenumber + "RescueCharRed"), this.transform.position, Quaternion.identity) as GameObject;
-            GeneratedChar.layer = 13;
+            Instantiate(Resources.Load(themenumber + "RescueCharRed"), this.transform.position, Quaternion.identity);
+           
         }
         else
         {
-            Instantiate(Resources.Load(themenumber + "RescueCharGreen"), this.transform.position, Quaternion.identity);
+            GeneratedChar = Instantiate(Resources.Load(themenumber + "RescueCharGreen"), this.transform.position, Quaternion.identity) as GameObject;
+            GeneratedChar.layer = 13;
         }
         Destroy(this.gameObject);
     }
