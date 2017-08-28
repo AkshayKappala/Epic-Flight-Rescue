@@ -23,56 +23,6 @@ public class SurpriseChar : MonoBehaviour
         StartVelocity = 7 + 0.01f * GroundScript.score;
         transform.Translate(Vector3.down * Time.deltaTime * StartVelocity);
     }
-    /* private void FixedUpdte()
-     {
-         if (isdestroying)
-         {
-             this.gameObject.transform.localScale /= 1.02f;
-         }
-     }*/
-    /*private void OnMouseDown()
-    {
-        if (touchcount == 0)
-        {
-            if (selector < 3)
-            {
-                this.transform.Find("JacketOpen").gameObject.SetActive(false);
-                this.transform.Find("Innocent").gameObject.SetActive(true);
-            }
-            else if (selector >= 3)
-            {
-                this.transform.Find("JacketOpen").gameObject.SetActive(false);
-                this.transform.Find("Criminal").gameObject.SetActive(true);
-            }
-            GroundScript.score++;
-            touchcount++;
-        }
-        else
-        {
-            if(this.transform.Find("Innocent").gameObject.activeSelf)
-            {
-
-                disappear();
-                GroundScript.score++;
-                isfirsttap = true;
-            }
-            if(this.transform.Find("Criminal").gameObject.activeSelf)
-            {
-                Instantiate(Resources.Load("GameOverImage"), GameObject.Find("BackgroundImage").transform);
-                GroundScript.live = false;
-                Handheld.Vibrate();
-                Time.timeScale = 0;
-            }
-        }
-    }
-    void disappear()
-    {
-        GameObject parachute = Instantiate(Resources.Load(themenumber + "Parachute"), this.transform.position + new Vector3(0, 1, 0), Quaternion.identity) as GameObject;
-        parachute.transform.SetParent(this.gameObject.transform);
-        gameObject.GetComponent<BoxCollider>().isTrigger = true;
-        isdestroying = true;
-        Destroy(this.gameObject, 0.5f);
-    }*/
 
     private void OnMouseDown()
     {

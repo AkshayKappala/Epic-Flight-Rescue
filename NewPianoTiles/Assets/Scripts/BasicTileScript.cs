@@ -15,6 +15,8 @@ public class BasicTileScript : MonoBehaviour
     public int themenumber;
     [HideInInspector]
     public float extraYblue=0;
+    public bool isFirstBlueChute = true;
+    public GameObject blueParachute1;
     private void Awake()
     {
         themenumber = GameController.theme;
@@ -53,7 +55,6 @@ public class BasicTileScript : MonoBehaviour
         }
         else if (Tiletype == TileType.Green)
         {
-            //Destroy(this.gameObject.GetComponent<BoxCollider>());
             isfirsttap = true;
             gameObject.GetComponent<BoxCollider>().isTrigger = true;
             disappear();
@@ -61,7 +62,7 @@ public class BasicTileScript : MonoBehaviour
         }
         else if (Tiletype == TileType.Blue)
         {
-            bluefunction();
+            bluefunction2();
 
         }
         /*if (SoundToggle.mute == 0)
@@ -82,10 +83,30 @@ public class BasicTileScript : MonoBehaviour
 
             GameObject parachute = Instantiate(Resources.Load("2Parachute2"), this.transform.position, Quaternion.identity) as GameObject;
             parachute.transform.SetParent(this.gameObject.transform);
-            //parachute.transform.localScale *= 0.66f;
             parachute.transform.position += new Vector3(0, 1, 0);
         extraYblue = 0.75f;
         startvelocityref = 5;
         Tiletype = TileType.Green;
+    }
+    void bluefunction2()
+    {
+        GroundScript.score++;
+        if (isFirstBlueChute == true)
+        {
+            blueParachute1 = Instantiate(Resources.Load(themenumber + "BlueParachute1"), this.transform.position, Quaternion.identity) as GameObject;
+            blueParachute1.transform.SetParent(this.gameObject.transform);
+            blueParachute1.transform.position += new Vector3(0, 1.75f, 0);
+            isFirstBlueChute = false;
+        }
+        else if(isfirsttap==false)
+        {
+            Destroy(blueParachute1);
+            GameObject parachute = Instantiate(Resources.Load(themenumber + "BlueParachute2"), this.transform.position, Quaternion.identity) as GameObject;
+            parachute.transform.SetParent(this.gameObject.transform);
+            parachute.transform.position += new Vector3(0, 1.75f, 0);
+            isdestroying = true;
+            Destroy(this.gameObject, 0.5f);
+        }
+        
     }
 }
