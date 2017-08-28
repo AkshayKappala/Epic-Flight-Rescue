@@ -7,6 +7,7 @@ public class SurpriseChar : MonoBehaviour
     public static float StartVelocity;
     [HideInInspector]
     public float selector;
+    public GameObject GeneratedChar;
     public int themenumber;
     private void Awake()
     {
@@ -77,7 +78,8 @@ public class SurpriseChar : MonoBehaviour
     {
         if(selector<3)
         {
-            Instantiate(Resources.Load(themenumber + "RescueCharRed"), this.transform.position, Quaternion.identity);
+            GeneratedChar= Instantiate(Resources.Load(themenumber + "RescueCharRed"), this.transform.position, Quaternion.identity) as GameObject;
+            GeneratedChar.layer = 13;
         }
         else
         {
