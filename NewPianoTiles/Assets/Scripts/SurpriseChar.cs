@@ -38,4 +38,8 @@ public class SurpriseChar : MonoBehaviour
         }
         Destroy(this.gameObject);
     }
+    private void OnDestroy()
+    {
+        Instantiate(Resources.Load("PoofWhite"), this.transform.position, Quaternion.identity);
+    }
 }

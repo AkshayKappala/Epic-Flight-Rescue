@@ -9,6 +9,7 @@ public class GiftMovement : MonoBehaviour {
 	}
     private void OnMouseDown()
     {
+        Instantiate(Resources.Load("PoofGold"), this.transform.position, Quaternion.identity);
         Economy.coins += 50;
         PlayerPrefs.SetInt("Coins", Economy.coins);
         Destroy(this.gameObject);

@@ -13,8 +13,6 @@ public class BasicTileScript : MonoBehaviour
     public TileType Tiletype;
     private AudioClip clip;
     public int themenumber;
-    [HideInInspector]
-    public float extraYblue=0;
     public bool isFirstBlueChute = true;
     public GameObject blueParachute1;
     private void Awake()
@@ -48,6 +46,7 @@ public class BasicTileScript : MonoBehaviour
     {
         if (Tiletype == TileType.Red)
         {
+            Instantiate(Resources.Load("PoofBlack"), this.transform.position, Quaternion.identity);
             Instantiate(Resources.Load("GameOverImage"), GameObject.Find("BackgroundImage").transform);
             GroundScript.live = false;
             Handheld.Vibrate();
@@ -55,39 +54,28 @@ public class BasicTileScript : MonoBehaviour
         }
         else if (Tiletype == TileType.Green)
         {
-            isfirsttap = true;
-            gameObject.GetComponent<BoxCollider>().isTrigger = true;
-            disappear();
-            GroundScript.score++;
+            greenfunction();
         }
         else if (Tiletype == TileType.Blue)
         {
             bluefunction2();
-
         }
         /*if (SoundToggle.mute == 0)
             AudioSource.PlayClipAtPoint(clip, GameObject.Find("Main Camera").transform.position);*/
     }
-    void disappear()
+
+
+    void greenfunction()
     {
-            GameObject parachute = Instantiate(Resources.Load(themenumber+"Parachute"), this.transform.position + new Vector3(0, 1+extraYblue, 0), Quaternion.identity) as GameObject;
-        extraYblue = 0;
-            parachute.transform.SetParent(this.gameObject.transform);
-            isdestroying = true;
-            Destroy(this.gameObject, 0.5f);
+        isfirsttap = true;
+        gameObject.GetComponent<BoxCollider>().isTrigger = true;
+        GameObject parachute = Instantiate(Resources.Load(themenumber + "Parachute"), this.transform.position + new Vector3(0, 1 , 0), Quaternion.identity) as GameObject;
+        parachute.transform.SetParent(this.gameObject.transform);
+        isdestroying = true;
+        Destroy(this.gameObject, 0.5f);
+        GroundScript.score++;
     }
    
-    void bluefunction()
-    {
-        GroundScript.score++;
-
-            GameObject parachute = Instantiate(Resources.Load("2Parachute2"), this.transform.position, Quaternion.identity) as GameObject;
-            parachute.transform.SetParent(this.gameObject.transform);
-            parachute.transform.position += new Vector3(0, 1, 0);
-        extraYblue = 0.75f;
-        startvelocityref = 5;
-        Tiletype = TileType.Green;
-    }
     void bluefunction2()
     {
         GroundScript.score++;
@@ -98,13 +86,16 @@ public class BasicTileScript : MonoBehaviour
             blueParachute1.transform.position += new Vector3(0, 1.75f, 0);
             isFirstBlueChute = false;
         }
-        else if(isfirsttap==false)
+        else if(isFirstBlueChute == false)
         {
+            isfirsttap = true;
+            gameObject.GetComponent<BoxCollider>().isTrigger = true;
             Destroy(blueParachute1);
             GameObject parachute = Instantiate(Resources.Load(themenumber + "BlueParachute2"), this.transform.position, Quaternion.identity) as GameObject;
             parachute.transform.SetParent(this.gameObject.transform);
             parachute.transform.position += new Vector3(0, 1.75f, 0);
             isdestroying = true;
+           // Time.timeScale = 0;
             Destroy(this.gameObject, 0.5f);
         }
         
