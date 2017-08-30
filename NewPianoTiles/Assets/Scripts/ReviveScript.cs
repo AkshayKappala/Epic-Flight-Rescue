@@ -8,7 +8,7 @@ public class ReviveScript : MonoBehaviour
     {
         GroundScript.live = true;
         Time.timeScale = 1;
-        GameObject.Find("BackgroundImage").transform.Translate(Vector3.down * 5.5f);
+        GameObject.Find("BackgroundImage").transform.Translate(Vector3.down *BasicTileScript.StartVelocity*2);
         Destroy(this.transform.parent.gameObject);
     }
 }
