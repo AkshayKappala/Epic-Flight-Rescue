@@ -20,15 +20,15 @@ public class TileSpawner : MonoBehaviour
         {
             positionselection = Random.Range(1, 6);
             if (positionselection >= 1 && positionselection < 2)
-                x = -4;
+                x = -3.4f;
             else if (positionselection >= 2 && positionselection < 3)
-                x = -2;
+                x = -1.7f;
             else if (positionselection >= 3 && positionselection < 4)
                 x = 0;
             else if (positionselection >= 4 && positionselection < 5)
-                x = 2;
+                x = 1.7f;
             else
-                x = 4;
+                x = 3.4f;
 
             colorselection = Random.Range(10, 192);
             if (colorselection >= 10 && colorselection < 20)

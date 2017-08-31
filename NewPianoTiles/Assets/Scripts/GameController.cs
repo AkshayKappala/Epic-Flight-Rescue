@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         mute = PlayerPrefs.GetInt("Soundpref");
+
     }
     private void Start()
     {

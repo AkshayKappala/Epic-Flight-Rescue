@@ -26,10 +26,10 @@ public class SurpriseChar : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if(selector<3)
+        if (selector < 3)
         {
             Instantiate(Resources.Load(themenumber + "RescueCharRed"), this.transform.position, Quaternion.identity);
-           
+
         }
         else
         {
@@ -37,9 +37,7 @@ public class SurpriseChar : MonoBehaviour
             GeneratedChar.layer = 13;
         }
         Destroy(this.gameObject);
-    }
-    private void OnDestroy()
-    {
         Instantiate(Resources.Load("PoofWhite"), this.transform.position, Quaternion.identity);
+
     }
 }
