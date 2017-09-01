@@ -11,4 +11,12 @@ public class ReviveScript : MonoBehaviour
         GameObject.Find("BackgroundImage").transform.Translate(Vector3.down *BasicTileScript.StartVelocity*2);
         Destroy(this.transform.parent.gameObject);
     }
+    public void Revive()
+    {
+        GroundScript.live = true;
+        Time.timeScale = 1;
+        GameObject.Find("BackgroundImage").transform.Translate(Vector3.down * BasicTileScript.StartVelocity * 2);
+     //   Destroy(this.transform.parent.gameObject);
+
+    }
 }

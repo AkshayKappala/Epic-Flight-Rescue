@@ -11,5 +11,14 @@ public class GotoMenu : MonoBehaviour
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
         GroundScript.score = 0;
         Time.timeScale = 1.0f;
+
     }
+    public void GotoMenuButton()
+    {
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        GroundScript.score = 0;
+        Time.timeScale = 1.0f;
+
+    }
+
 }

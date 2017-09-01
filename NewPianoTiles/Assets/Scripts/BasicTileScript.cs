@@ -47,10 +47,9 @@ public class BasicTileScript : MonoBehaviour
         if (Tiletype == TileType.Red)
         {
             Instantiate(Resources.Load("PoofBlack"), this.transform.position, Quaternion.identity);
-            Instantiate(Resources.Load("GameOverImage"), GameObject.Find("BackgroundImage").transform);
+            UIManager.Instance.ShowGameOverMenu();
+           // Instantiate(Resources.Load("GameOverImage"), GameObject.Find("BackgroundImage").transform);
             GroundScript.live = false;
-            Handheld.Vibrate();
-            Time.timeScale = 0;
         }
         else if (Tiletype == TileType.Green)
         {

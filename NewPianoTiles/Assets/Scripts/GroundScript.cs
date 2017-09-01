@@ -23,10 +23,9 @@ public class GroundScript : MonoBehaviour
     {
         if (other.CompareTag("GreenTag")||other.CompareTag("BlueTag"))
         {
-            Instantiate(Resources.Load("Gameoverimage"),GameObject.Find("BackgroundImage").transform);
+            UIManager.Instance.ShowGameOverMenu();
+            //Instantiate(Resources.Load("Gameoverimage"),GameObject.Find("BackgroundImage").transform);
             live = false;
-            Handheld.Vibrate();
-            Time.timeScale = 0;
         }
         else
         {
