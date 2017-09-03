@@ -22,7 +22,7 @@ public class BasicTileScript : MonoBehaviour
     }
     private void Start()
     {
-        StartVelocity = 7;
+        StartVelocity = 10;
         startvelocityref = StartVelocity;
         float position = this.gameObject.transform.position.x;
     }
@@ -41,7 +41,7 @@ public class BasicTileScript : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if (!EventSystem.current.IsPointerOverGameObject())
+        if(!IsPointerOverUIObject())
         {
             if (Tiletype == TileType.Red)
             {
@@ -56,8 +56,6 @@ public class BasicTileScript : MonoBehaviour
             {
                 bluefunction2();
             }
-            /*if (SoundToggle.mute == 0)
-                AudioSource.PlayClipAtPoint(clip, GameObject.Find("Main Camera").transform.position);*/
         }
     }
 
@@ -65,11 +63,11 @@ public class BasicTileScript : MonoBehaviour
     void greenfunction()
     {
         isfirsttap = true;
-        gameObject.GetComponent<BoxCollider>().isTrigger = true;
         GameObject parachute = Instantiate(Resources.Load(themenumber + "Parachute"), this.transform.position + new Vector3(0, 1 , 0), Quaternion.identity) as GameObject;
         parachute.transform.SetParent(this.gameObject.transform);
         isdestroying = true;
-        Destroy(this.gameObject, 0.5f);
+        Destroy(this.gameObject, 0.3f);
+        this.gameObject.layer = 2;
         UIManager.Instance.score++;
     }
    
@@ -86,15 +84,24 @@ public class BasicTileScript : MonoBehaviour
         else if(isFirstBlueChute == false)
         {
             isfirsttap = true;
-            gameObject.GetComponent<BoxCollider>().isTrigger = true;
             Destroy(blueParachute1);
             GameObject parachute = Instantiate(Resources.Load(themenumber + "BlueParachute2"), this.transform.position, Quaternion.identity) as GameObject;
             parachute.transform.SetParent(this.gameObject.transform);
             parachute.transform.position += new Vector3(0, 1.75f, 0);
             isdestroying = true;
-           // Time.timeScale = 0;
-            Destroy(this.gameObject, 0.5f);
+            Destroy(this.gameObject, 0.3f);
+            this.gameObject.layer = 2;
         }
         
+    }
+
+    //below method is written in substitution to EventSystem.current.IsPointerOverGameObject()
+    private bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
     }
 }

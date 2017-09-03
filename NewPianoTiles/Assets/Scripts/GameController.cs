@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         if(GameObject.Find("UIManager"))
-            UIManager.Instance.ScoreDisplayer.SetActive(false);
+            UIManager.Instance.ScoreWallet.SetActive(false);
         mute = PlayerPrefs.GetInt("Soundpref");
         if (mute == 0)
         {

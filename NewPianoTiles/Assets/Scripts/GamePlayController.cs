@@ -21,7 +21,7 @@ public class GamePlayController : MonoBehaviour
     }
     private void Start()
     {
-        UIManager.Instance.ScoreDisplayer.SetActive(true);
+        UIManager.Instance.ScoreWallet.SetActive(true);
         UIManager.Instance.score = 0;
         UIManager.Instance.resume();
         Instantiate(Resources.Load(ThemeNumber + "RescueCharGreen"), new Vector3(0, 23.2f, 0), Quaternion.identity);

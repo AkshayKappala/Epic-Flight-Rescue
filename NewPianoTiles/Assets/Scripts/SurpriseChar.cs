@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class SurpriseChar : MonoBehaviour
 {
@@ -15,29 +16,41 @@ public class SurpriseChar : MonoBehaviour
     }
     private void Start()
     {
-        StartVelocity = 7;
+        StartVelocity = 10;
         selector = Random.Range(1, 5);
     }
     void Update()
     {
-        StartVelocity = 7 + 0.01f * UIManager.Instance.score;
+        StartVelocity = 10 + 0.01f * UIManager.Instance.score;
         transform.Translate(Vector3.down * Time.deltaTime * StartVelocity);
     }
 
     private void OnMouseDown()
     {
-        if (selector < 3)
+        if (!IsPointerOverUIObject())
         {
-            Instantiate(Resources.Load(themenumber + "RescueCharRed"), this.transform.position, Quaternion.identity);
+            if (selector < 3)
+            {
+                Instantiate(Resources.Load(themenumber + "RescueCharRed"), this.transform.position, Quaternion.identity);
 
+            }
+            else
+            {
+                GeneratedChar = Instantiate(Resources.Load(themenumber + "RescueCharGreen"), this.transform.position, Quaternion.identity) as GameObject;
+                GeneratedChar.layer = 13;
+            }
+            Destroy(this.gameObject);
+            Instantiate(Resources.Load("PoofWhite"), this.transform.position, Quaternion.identity);
         }
-        else
-        {
-            GeneratedChar = Instantiate(Resources.Load(themenumber + "RescueCharGreen"), this.transform.position, Quaternion.identity) as GameObject;
-            GeneratedChar.layer = 13;
-        }
-        Destroy(this.gameObject);
-        Instantiate(Resources.Load("PoofWhite"), this.transform.position, Quaternion.identity);
+    }
 
+    //below method is written in substitution to EventSystem.current.IsPointerOverGameObject()
+    private bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
     }
 }

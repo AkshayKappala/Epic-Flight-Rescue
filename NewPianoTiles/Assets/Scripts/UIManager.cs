@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     public GameObject PauseMenu;
     public GameObject PauseButton;
     public GameObject GameOverMenu;
-    public GameObject ScoreDisplayer;
+    public GameObject ScoreWallet;
     public int score = 0;
     public Text Scoreboard;
     public int HighScore;
