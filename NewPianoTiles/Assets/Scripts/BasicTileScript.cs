@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 public class BasicTileScript : MonoBehaviour
@@ -28,12 +29,8 @@ public class BasicTileScript : MonoBehaviour
 
     void Update ()
     {
-        StartVelocity =startvelocityref+0.01f*GroundScript.score;
+        StartVelocity =startvelocityref+0.01f* UIManager.Instance.score;
         transform.Translate(Vector3.down * Time.deltaTime*StartVelocity);
-        if (GroundScript.live == false || isfirsttap == true)
-            this.gameObject.GetComponent<BoxCollider>().enabled = false;
-        else if (GroundScript.live == true)
-            this.gameObject.GetComponent<BoxCollider>().enabled = true;
 	}
     private void FixedUpdate()
     {
@@ -44,23 +41,24 @@ public class BasicTileScript : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if (Tiletype == TileType.Red)
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            Instantiate(Resources.Load("PoofBlack"), this.transform.position, Quaternion.identity);
-            UIManager.Instance.ShowGameOverMenu();
-           // Instantiate(Resources.Load("GameOverImage"), GameObject.Find("BackgroundImage").transform);
-            GroundScript.live = false;
+            if (Tiletype == TileType.Red)
+            {
+                Instantiate(Resources.Load("PoofBlack"), this.transform.position, Quaternion.identity);
+                UIManager.Instance.ShowGameOverMenu();
+            }
+            else if (Tiletype == TileType.Green)
+            {
+                greenfunction();
+            }
+            else if (Tiletype == TileType.Blue)
+            {
+                bluefunction2();
+            }
+            /*if (SoundToggle.mute == 0)
+                AudioSource.PlayClipAtPoint(clip, GameObject.Find("Main Camera").transform.position);*/
         }
-        else if (Tiletype == TileType.Green)
-        {
-            greenfunction();
-        }
-        else if (Tiletype == TileType.Blue)
-        {
-            bluefunction2();
-        }
-        /*if (SoundToggle.mute == 0)
-            AudioSource.PlayClipAtPoint(clip, GameObject.Find("Main Camera").transform.position);*/
     }
 
 
@@ -72,12 +70,12 @@ public class BasicTileScript : MonoBehaviour
         parachute.transform.SetParent(this.gameObject.transform);
         isdestroying = true;
         Destroy(this.gameObject, 0.5f);
-        GroundScript.score++;
+        UIManager.Instance.score++;
     }
    
     void bluefunction2()
     {
-        GroundScript.score++;
+        UIManager.Instance.score++;
         if (isFirstBlueChute == true)
         {
             blueParachute1 = Instantiate(Resources.Load(themenumber + "BlueParachute1"), this.transform.position, Quaternion.identity) as GameObject;

@@ -20,7 +20,7 @@ public class SurpriseChar : MonoBehaviour
     }
     void Update()
     {
-        StartVelocity = 7 + 0.01f * GroundScript.score;
+        StartVelocity = 7 + 0.01f * UIManager.Instance.score;
         transform.Translate(Vector3.down * Time.deltaTime * StartVelocity);
     }
 

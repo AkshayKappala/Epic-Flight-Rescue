@@ -5,39 +5,26 @@ using UnityEngine.UI;
 
 public class GroundScript : MonoBehaviour
 {
-    public static int score=0; 
     public GameObject Ground;
     public GameObject image;
-    public Text Scoreboard;
-    public static bool live = true;
     public void Start()
     {
-        Screen.orientation = ScreenOrientation.Portrait;
-        setScoreboard();   
+        Screen.orientation = ScreenOrientation.Portrait; 
     }
-    private void Update()
-    {
-        setScoreboard();
-    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("GreenTag")||other.CompareTag("BlueTag"))
         {
             UIManager.Instance.ShowGameOverMenu();
-            //Instantiate(Resources.Load("Gameoverimage"),GameObject.Find("BackgroundImage").transform);
-            live = false;
         }
         else
         {
-            score++;
+            UIManager.Instance.score++;
         }
     }
     private void OnTriggerExit(Collider other)
     {
         Destroy(other.gameObject);
-    }
-    void setScoreboard()
-    {
-        Scoreboard.text = score.ToString();
     }
 }

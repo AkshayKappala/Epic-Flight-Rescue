@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
     public GameObject Tutorial1;
     public GameObject Tutorial2;
     public GameObject Tutorial3;
+    public Text MMHighScore;
     string subject = "Subject text";
     string body = "Actual text (Link)";
 
@@ -24,6 +25,8 @@ public class GameController : MonoBehaviour
     }
     private void Start()
     {
+        if(GameObject.Find("UIManager"))
+            UIManager.Instance.ScoreDisplayer.SetActive(false);
         mute = PlayerPrefs.GetInt("Soundpref");
         if (mute == 0)
         {
@@ -33,17 +36,17 @@ public class GameController : MonoBehaviour
         {
             GameObject.Find("SoundToggle").GetComponent<Toggle>().isOn = false;
         }
-        if (HighScoreUpdater.HighScore == 0)
+        if (PlayerPrefs.GetInt("HighScore") == 0)
         {
             //write tutorial method here
             TutorialCall();
         }
+        MMHighScore.text = "High Score : " + PlayerPrefs.GetInt("HighScore").ToString();
     }
 
     public void Play()
     {
         SceneManager.LoadScene("GamePlay", LoadSceneMode.Single);
-        GroundScript.live = true;
     }
 
     public void SoundToggle()
