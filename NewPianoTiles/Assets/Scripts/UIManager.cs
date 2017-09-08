@@ -36,6 +36,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         setScoreboard();
+        SetHighScore.text = "High Score : " + HighScore.ToString();
     }
 
     private void Update()
