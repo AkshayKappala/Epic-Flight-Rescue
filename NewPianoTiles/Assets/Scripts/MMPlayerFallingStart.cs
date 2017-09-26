@@ -12,7 +12,7 @@ public class MMPlayerFallingStart : MonoBehaviour {
 
     public IEnumerator ThrowChar()
     {
-        t1 = Random.Range(5,10);
+        t1 = Random.Range(5,8);
         yield return new WaitForSeconds(t1);
         Randgernerator();
     }

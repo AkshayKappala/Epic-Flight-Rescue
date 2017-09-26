@@ -16,6 +16,7 @@ public class GamePlayController : MonoBehaviour
         {
             case 1: GameObject.Find("BackgroundImage").GetComponent<SpriteRenderer>().sprite = BG1; break;
             case 2: GameObject.Find("BackgroundImage").GetComponent<SpriteRenderer>().sprite = BG2; break;
+            case 3: GameObject.Find("BackgroundImage").GetComponent<SpriteRenderer>().sprite = BG2; break;
         }
 
     }
