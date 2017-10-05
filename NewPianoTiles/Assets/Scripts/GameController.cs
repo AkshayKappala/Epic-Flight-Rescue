@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 public class GameController : MonoBehaviour
 {
     public static int mute;
-    public static int theme=2;
+    public static int theme;
     public GameObject shop;
     public GameObject Tutorial1;
     public GameObject Tutorial2;
@@ -20,6 +20,8 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        theme = 2;
+        theme = PlayerPrefs.GetInt("Theme");
         mute = PlayerPrefs.GetInt("Soundpref");
 
     }
@@ -63,7 +65,7 @@ public class GameController : MonoBehaviour
         PlayerPrefs.SetInt("Soundpref", mute); 
     }
 
-    public void ThemeNext()
+ /*   public void ThemeNext()
     {
         if (theme == 1)
             theme = 2;
@@ -76,6 +78,26 @@ public class GameController : MonoBehaviour
             theme = 1;
        else if (theme == 3)
             theme = 2;
+    }*/
+
+    public void Theme1()
+    {
+        theme = 1;
+        SaveTheme(1);
+    }
+    public void Theme2()
+    {
+        theme = 2;
+        SaveTheme(2);
+    }
+    public void Theme3()
+    {
+        theme = 3;
+        SaveTheme(3);
+    }
+    public void SaveTheme(int n)
+    {
+        PlayerPrefs.SetInt("Theme", n);
     }
 
     public void ShopButtonClick()
