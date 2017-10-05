@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
     public GameObject Tutorial1;
     public GameObject Tutorial2;
     public GameObject Tutorial3;
+    public GameObject Sound_CrossMark;
     public Text MMHighScore;
     string subject = "Subject text";
     string body = "Actual text (Link)";
@@ -29,15 +30,10 @@ public class GameController : MonoBehaviour
     {
         if(GameObject.Find("UIManager"))
             UIManager.Instance.ScoreWallet.SetActive(false);
+
         mute = PlayerPrefs.GetInt("Soundpref");
-        if (mute == 0)
-        {
-            GameObject.Find("SoundToggle").GetComponent<Toggle>().isOn = true;
-        }
-        else if (mute == 1)
-        {
-            GameObject.Find("SoundToggle").GetComponent<Toggle>().isOn = false;
-        }
+        SoundIconChanger();
+       
         if (PlayerPrefs.GetInt("HighScore") == 0)
         {
             //write tutorial method here
@@ -58,27 +54,25 @@ public class GameController : MonoBehaviour
         {
             mute = 1;
         }
-        else if(mute==1)
+        else
         {
             mute = 0;
         }
-        PlayerPrefs.SetInt("Soundpref", mute); 
+        PlayerPrefs.SetInt("Soundpref", mute);
+        SoundIconChanger();
     }
 
- /*   public void ThemeNext()
+    public void SoundIconChanger()
     {
-        if (theme == 1)
-            theme = 2;
-       else if (theme == 2)
-            theme = 3;
+        if(mute==0)
+        {
+            Sound_CrossMark.SetActive(false);
+        }
+        else
+        {
+            Sound_CrossMark.SetActive(true);
+        }
     }
-    public void ThemePrevious()
-    {
-        if (theme == 2)
-            theme = 1;
-       else if (theme == 3)
-            theme = 2;
-    }*/
 
     public void Theme1()
     {
@@ -102,13 +96,11 @@ public class GameController : MonoBehaviour
 
     public void ShopButtonClick()
     {
-        //GameObject.Find("Shop").SetActive(true);
         shop.SetActive(true);
     }
 
     public void ShopCloseButton()
     {
-        //GameObject.Find("Shop").SetActive(false);
         shop.SetActive(false);
     }
 

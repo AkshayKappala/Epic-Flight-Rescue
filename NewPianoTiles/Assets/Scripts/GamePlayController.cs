@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class GamePlayController : MonoBehaviour
 {
     public int ThemeNumber;
+    public GameObject BGMusic;
+    public GameObject Sound_Listener;
     public Sprite BG1;
     public Sprite BG2;
     private void Awake()
@@ -20,8 +22,23 @@ public class GamePlayController : MonoBehaviour
         }
 
     }
+
+    public void SoundListenToggle()
+    {
+        if(PlayerPrefs.GetInt("Soundpref")==0)
+        {
+            Sound_Listener.SetActive(true);
+        }
+        else
+        {
+            Sound_Listener.SetActive(false);
+        }
+    }
+
     private void Start()
     {
+        SoundListenToggle();
+        BGMusic.GetComponent<AudioSource>().PlayDelayed(2);
         UIManager.Instance.ScoreWallet.SetActive(true);
         UIManager.Instance.score = 0;
         UIManager.Instance.resume();
