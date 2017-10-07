@@ -22,14 +22,18 @@ public class BasicTileScript : MonoBehaviour
     }
     private void Start()
     {
-        StartVelocity = 10;
+        StartVelocity = 6;
         startvelocityref = StartVelocity;
         float position = this.gameObject.transform.position.x;
     }
 
     void Update ()
     {
-        StartVelocity =startvelocityref+0.01f* UIManager.Instance.score;
+        //  StartVelocity =startvelocityref+0.01f* UIManager.Instance.score;
+        if (UIManager.Instance.score <= 600)
+        {
+            StartVelocity = startvelocityref + startvelocityref * 0.002f * UIManager.Instance.score;
+        }
         transform.Translate(Vector3.down * Time.deltaTime*StartVelocity);
 	}
     private void FixedUpdate()

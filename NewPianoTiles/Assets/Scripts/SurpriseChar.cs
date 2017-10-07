@@ -5,8 +5,6 @@ using UnityEngine.EventSystems;
 
 public class SurpriseChar : MonoBehaviour
 {
-    public static float StartVelocity;
-    [HideInInspector]
     public float selector;
     public GameObject GeneratedChar;
     public int themenumber;
@@ -14,15 +12,13 @@ public class SurpriseChar : MonoBehaviour
     {
         themenumber = GameController.theme;
     }
-    private void Start()
+    public void Start()
     {
-        StartVelocity = 10;
         selector = Random.Range(1, 5);
     }
     void Update()
     {
-        StartVelocity = 10 + 0.01f * UIManager.Instance.score;
-        transform.Translate(Vector3.down * Time.deltaTime * StartVelocity);
+        transform.Translate(Vector3.down * Time.deltaTime *BasicTileScript.StartVelocity);
     }
 
     private void OnMouseDown()

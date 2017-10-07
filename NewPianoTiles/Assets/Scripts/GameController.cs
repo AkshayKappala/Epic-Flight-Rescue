@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
 {
     public static int mute;
     public static int theme;
+    public GameObject ThemeLocker;
     public GameObject shop;
     public GameObject Tutorial1;
     public GameObject Tutorial2;
@@ -21,10 +22,12 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-        theme = 2;
         theme = PlayerPrefs.GetInt("Theme");
         mute = PlayerPrefs.GetInt("Soundpref");
-
+        if(theme!=1&&theme!=2&&theme!=3)
+        {
+            theme = 2;
+        }
     }
     private void Start()
     {
@@ -33,6 +36,7 @@ public class GameController : MonoBehaviour
 
         mute = PlayerPrefs.GetInt("Soundpref");
         SoundIconChanger();
+        ThemeLock();
        
         if (PlayerPrefs.GetInt("HighScore") == 0)
         {
@@ -40,6 +44,13 @@ public class GameController : MonoBehaviour
             TutorialCall();
         }
         MMHighScore.text = "High Score : " + PlayerPrefs.GetInt("HighScore").ToString();
+    }
+    public void ThemeLock()
+    {
+        if(PlayerPrefs.GetInt("isUnlocked")==5)
+        {
+            ThemeLocker.SetActive(false);
+        }
     }
 
     public void Play()
@@ -110,13 +121,13 @@ public class GameController : MonoBehaviour
         PlayerPrefs.SetInt("Coins", Economy.coins);
     }
 
-    public void ShopPurchase1()
+    /*public void ShopPurchase1()
     {
         if (Economy.coins >= 200)
         {
             Economy.coins -= 200;
         }
-    }
+    }*/
 
     public void TutorialCall()
     {

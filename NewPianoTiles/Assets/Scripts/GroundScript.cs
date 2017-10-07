@@ -23,8 +23,4 @@ public class GroundScript : MonoBehaviour
             UIManager.Instance.score++;
         }
     }
-    private void OnTriggerExit(Collider other)
-    {
-        Destroy(other.gameObject);
-    }
 }

@@ -8,6 +8,9 @@ public class MMPlayerFallingStart : MonoBehaviour {
     {
         x_previous = 0;
         Randgernerator();
+        Instantiate(Resources.Load("Happy" + Random.Range(1, 6)), this.transform.position + new Vector3(Random.Range(-4, 4),Random.Range(-18,-13), 0), Quaternion.identity);
+        Instantiate(Resources.Load("Happy" + Random.Range(1, 6)), this.transform.position + new Vector3(Random.Range(-4, 4), Random.Range(-25,-20), 0), Quaternion.identity);
+        Instantiate(Resources.Load("Happy" + Random.Range(1, 6)), this.transform.position + new Vector3(Random.Range(-4, 4), Random.Range(-11, -6), 0), Quaternion.identity);
     }
 
     public IEnumerator ThrowChar()

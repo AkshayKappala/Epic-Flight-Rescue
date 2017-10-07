@@ -1,5 +1,5 @@
-lastUpgrade=00939
-proj.pluginVersion=0.9.39a
+lastUpgrade=00941
+proj.pluginVersion=0.9.41
 proj.AppId=592502354981
 and.BundleId=com.FreakSpace.EpicFlightRescue
 proj.classDir=Assets

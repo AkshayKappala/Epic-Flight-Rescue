@@ -37,20 +37,13 @@ public class GamePlayController : MonoBehaviour
 
     private void Start()
     {
+        
         SoundListenToggle();
         BGMusic.GetComponent<AudioSource>().PlayDelayed(2);
         UIManager.Instance.ScoreWallet.SetActive(true);
         UIManager.Instance.score = 0;
         UIManager.Instance.resume();
         Instantiate(Resources.Load(ThemeNumber + "RescueCharGreen"), new Vector3(0, 23.2f, 0), Quaternion.identity);
-        StartCoroutine(storkcreation());
     }
 
-
-    IEnumerator storkcreation()
-    {
-        yield return new WaitForSeconds(10 + Random.Range(0, 60));
-        Instantiate(Resources.Load("Stork"), GameObject.Find("BackgroundImage").transform.position + new Vector3(10, Random.Range(-5, 5), 0), Quaternion.identity);
-        StartCoroutine(storkcreation());
-    }
 }

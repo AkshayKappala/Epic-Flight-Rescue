@@ -61,6 +61,7 @@ public class UIManager : MonoBehaviour
     {
         if (!GameOverMenu.activeSelf)
         {
+            GameObject.Find("BackgroundImage").transform.Translate(Vector3.down * 5.5f);
             Time.timeScale = 0;
             PauseMenu.SetActive(true);
             PauseButton.SetActive(false);
@@ -87,8 +88,13 @@ public class UIManager : MonoBehaviour
 
     public void Revive()
     {
-        CloseGameOverMenu();
-        GameObject.Find("BackgroundImage").transform.Translate(Vector3.down * BasicTileScript.StartVelocity * 2);
+        if (Economy.coins >= 200)
+        {
+            Economy.coins -= 200;
+            PlayerPrefs.SetInt("Coins", Economy.coins);
+            CloseGameOverMenu();
+            GameObject.Find("BackgroundImage").transform.Translate(Vector3.down * BasicTileScript.StartVelocity * 2);
+        }
     }
 
     public void AdnRevive()
@@ -96,7 +102,7 @@ public class UIManager : MonoBehaviour
         Economy.coins += 100;
         PlayerPrefs.SetInt("Coins", Economy.coins);
         CloseGameOverMenu();
-        GameObject.Find("BackgroundImage").transform.Translate(Vector3.down * 5.5f);
+        GameObject.Find("BackgroundImage").transform.Translate(Vector3.down * BasicTileScript.StartVelocity * 2);
     }
 
     public void Restart()
