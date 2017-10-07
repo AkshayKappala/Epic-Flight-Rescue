@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
     public GameObject PauseMenu;
-    public GameObject PauseButton;
+   /* public GameObject PauseButton;*/
     public GameObject GameOverMenu;
     public GameObject ScoreWallet;
     public GameObject GameOverLayer;
@@ -43,6 +43,13 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         setScoreboard();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(!PauseMenu.activeSelf)
+            {
+                Pause();
+            }
+        }
     }
 
     public void ShowGameOverMenu()
@@ -60,14 +67,13 @@ public class UIManager : MonoBehaviour
         StartCoroutine(CloseGameOverLayer());
     }
 
-    public void pause()
+    public void Pause()
     {
         if (!GameOverMenu.activeSelf)
         {
             GameObject.Find("BackgroundImage").transform.Translate(Vector3.down * 5.5f);
             Time.timeScale = 0;
             PauseMenu.SetActive(true);
-            PauseButton.SetActive(false);
             GameOverLayer.SetActive(true);
         }
     }
@@ -76,7 +82,6 @@ public class UIManager : MonoBehaviour
     {
         PauseMenu.SetActive(false);
         Time.timeScale = 1;
-        PauseButton.SetActive(true);
         StartCoroutine(CloseGameOverLayer());
     }
 
@@ -84,8 +89,8 @@ public class UIManager : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
         Time.timeScale = 1.0f;
-        PauseMenu.SetActive(false);
-        PauseButton.SetActive(false);
+      /*  PauseMenu.SetActive(false);
+        PauseButton.SetActive(false);*/
         GameOverMenu.SetActive(false);
         Scoreboard.text = null;
         sethighscore();
@@ -143,5 +148,10 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(0.1f);
         GameOverMenu.SetActive(true);
+    }
+
+    public void OnApplicationPause(bool pause)
+    {
+        Pause();
     }
 }

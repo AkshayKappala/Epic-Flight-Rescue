@@ -30,11 +30,17 @@ public class BasicTileScript : MonoBehaviour
     void Update ()
     {
         //  StartVelocity =startvelocityref+0.01f* UIManager.Instance.score;
-        if (UIManager.Instance.score <= 600)
+        if(UIManager.Instance.score <= 600)
         {
             StartVelocity = startvelocityref + startvelocityref * 0.002f * UIManager.Instance.score;
+            transform.Translate(Vector3.down * Time.deltaTime * StartVelocity);
         }
-        transform.Translate(Vector3.down * Time.deltaTime*StartVelocity);
+        else
+        {
+            StartVelocity = 13.2f;
+            transform.Translate(Vector3.down * Time.deltaTime * 13.2f);
+        }
+
 	}
     private void FixedUpdate()
     {

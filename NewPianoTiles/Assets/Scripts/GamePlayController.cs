@@ -25,14 +25,14 @@ public class GamePlayController : MonoBehaviour
 
     public void SoundListenToggle()
     {
-        if(PlayerPrefs.GetInt("Soundpref")==0)
+       /* if(PlayerPrefs.GetInt("Soundpref")==0)
         {
             Sound_Listener.SetActive(true);
         }
         else
         {
             Sound_Listener.SetActive(false);
-        }
+        }*/
     }
 
     private void Start()
@@ -42,7 +42,7 @@ public class GamePlayController : MonoBehaviour
         BGMusic.GetComponent<AudioSource>().PlayDelayed(2);
         UIManager.Instance.ScoreWallet.SetActive(true);
         UIManager.Instance.score = 0;
-        UIManager.Instance.resume();
+       // UIManager.Instance.resume();
         Instantiate(Resources.Load(ThemeNumber + "RescueCharGreen"), new Vector3(0, 23.2f, 0), Quaternion.identity);
     }
 
