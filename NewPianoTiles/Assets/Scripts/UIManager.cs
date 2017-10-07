@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public GameObject PauseButton;
     public GameObject GameOverMenu;
     public GameObject ScoreWallet;
+    public GameObject GameOverLayer;
     public int score = 0;
     public Text Scoreboard;
     public int HighScore;
@@ -47,14 +48,16 @@ public class UIManager : MonoBehaviour
     public void ShowGameOverMenu()
     {
         sethighscore();
-        GameOverMenu.SetActive(true);
         Time.timeScale = 0;
+        GameOverLayer.SetActive(true);
+        StartCoroutine(ShowGameOverMenuIE());
     }
 
     public void CloseGameOverMenu()
     {
         GameOverMenu.SetActive(false);
         Time.timeScale = 1;
+        StartCoroutine(CloseGameOverLayer());
     }
 
     public void pause()
@@ -65,6 +68,7 @@ public class UIManager : MonoBehaviour
             Time.timeScale = 0;
             PauseMenu.SetActive(true);
             PauseButton.SetActive(false);
+            GameOverLayer.SetActive(true);
         }
     }
 
@@ -73,6 +77,7 @@ public class UIManager : MonoBehaviour
         PauseMenu.SetActive(false);
         Time.timeScale = 1;
         PauseButton.SetActive(true);
+        StartCoroutine(CloseGameOverLayer());
     }
 
     public void gotomenu()
@@ -126,5 +131,17 @@ public class UIManager : MonoBehaviour
             PlayerPrefs.SetInt("HighScore", HighScore);
             SetHighScore.text = "High Score : " + HighScore.ToString();
         }
+    }
+
+    IEnumerator CloseGameOverLayer()
+    {
+        yield return new WaitForSeconds(0.1f);
+        GameOverLayer.SetActive(false);
+    }
+
+    IEnumerator ShowGameOverMenuIE()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+        GameOverMenu.SetActive(true);
     }
 }
