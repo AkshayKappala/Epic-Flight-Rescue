@@ -17,7 +17,7 @@ public class Purchase : MonoBehaviour {
 
     public void BuyAllCharcs()
     {
-        IAPManager.instance.UnlockAll();
+       // IAPManager.instance.UnlockAll();
         PlayerPrefs.SetInt("isUnlocked", 5);
         ThemeLocker.SetActive(false);
     }

@@ -8,10 +8,11 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
     public GameObject PauseMenu;
-   /* public GameObject PauseButton;*/
+    public GameObject PauseButton;
     public GameObject GameOverMenu;
     public GameObject ScoreWallet;
     public GameObject GameOverLayer;
+    public GameObject NoCoins;
     public int score = 0;
     public Text Scoreboard;
     public int HighScore;
@@ -36,6 +37,10 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        PauseButton.SetActive(true);
+        PauseMenu.SetActive(false);
+        GameOverMenu.SetActive(false);
+        GameOverLayer.SetActive(false);
         setScoreboard();
         SetHighScore.text = "High Score : " + HighScore.ToString();
     }
@@ -54,6 +59,9 @@ public class UIManager : MonoBehaviour
 
     public void ShowGameOverMenu()
     {
+        PauseButton.SetActive(false);
+        PauseMenu.SetActive(false);
+        NoCoins.SetActive(false);
         sethighscore();
         Time.timeScale = 0;
         GameOverLayer.SetActive(true);
@@ -62,6 +70,8 @@ public class UIManager : MonoBehaviour
 
     public void CloseGameOverMenu()
     {
+        NoCoins.SetActive(false);
+        PauseButton.SetActive(true);
         GameOverMenu.SetActive(false);
         Time.timeScale = 1;
         StartCoroutine(CloseGameOverLayer());
@@ -71,8 +81,9 @@ public class UIManager : MonoBehaviour
     {
         if (!GameOverMenu.activeSelf)
         {
-            GameObject.Find("BackgroundImage").transform.Translate(Vector3.down * 5.5f);
+           
             Time.timeScale = 0;
+            PauseButton.SetActive(false);
             PauseMenu.SetActive(true);
             GameOverLayer.SetActive(true);
         }
@@ -80,6 +91,9 @@ public class UIManager : MonoBehaviour
 
     public void resume()
     {
+      //  GameObject.Find("BackgroundImage").transform.Translate(Vector3.down * 5.5f);
+        GameObject.Find("BackgroundImage").transform.Translate(Vector3.down * BasicTileScript.StartVelocity * 2);
+        PauseButton.SetActive(true);
         PauseMenu.SetActive(false);
         Time.timeScale = 1;
         StartCoroutine(CloseGameOverLayer());
@@ -87,11 +101,14 @@ public class UIManager : MonoBehaviour
 
     public void gotomenu()
     {
+        resume();
+        /*PauseButton.SetActive(false);
+        PauseMenu.SetActive(false);*/
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
         Time.timeScale = 1.0f;
-      /*  PauseMenu.SetActive(false);
-        PauseButton.SetActive(false);*/
         GameOverMenu.SetActive(false);
+        PauseMenu.SetActive(false);
+        PauseButton.SetActive(false);
         Scoreboard.text = null;
         sethighscore();
     }
@@ -104,6 +121,11 @@ public class UIManager : MonoBehaviour
             PlayerPrefs.SetInt("Coins", Economy.coins);
             CloseGameOverMenu();
             GameObject.Find("BackgroundImage").transform.Translate(Vector3.down * BasicTileScript.StartVelocity * 2);
+        }
+
+        else
+        {
+            NoCoins.SetActive(true);
         }
     }
 
@@ -153,5 +175,12 @@ public class UIManager : MonoBehaviour
     public void OnApplicationPause(bool pause)
     {
         Pause();
+    }
+    public void OnApplicationFocus(bool focus)
+    {
+        if(SceneManager.GetActiveScene().name!="Gameplay")
+        {
+            resume();
+        }
     }
 }

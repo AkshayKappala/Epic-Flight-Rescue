@@ -33,7 +33,8 @@ public class GameController : MonoBehaviour
     {
         if(GameObject.Find("UIManager"))
             UIManager.Instance.ScoreWallet.SetActive(false);
-
+       // GameObject.Find("PauseMenu").SetActive(false);
+       // GameObject.Find("PauseButton").SetActive(false);
         mute = PlayerPrefs.GetInt("Soundpref");
         SoundIconChanger();
         ThemeLock();
@@ -75,7 +76,7 @@ public class GameController : MonoBehaviour
 
     public void SoundIconChanger()
     {
-        if(mute==0)
+        if(mute==1)
         {
             Sound_CrossMark.SetActive(false);
         }
