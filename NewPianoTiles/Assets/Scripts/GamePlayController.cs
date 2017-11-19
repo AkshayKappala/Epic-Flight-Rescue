@@ -38,7 +38,6 @@ public class GamePlayController : MonoBehaviour
 
     private void Start()
     {
-        
         SoundListenToggle();
         BGMusic.GetComponent<AudioSource>().PlayDelayed(2);
         UIManager.Instance.ScoreWallet.SetActive(true);

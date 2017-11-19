@@ -8,8 +8,8 @@ public class Sound : MonoBehaviour {
     {
 
         if (GameController.mute == 0)
-            AudioListener.volume = 0;
-        else
             AudioListener.volume = 1;
+        else
+            AudioListener.volume = 0;
     }
 }

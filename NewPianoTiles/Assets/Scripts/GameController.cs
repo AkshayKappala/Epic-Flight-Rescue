@@ -12,11 +12,15 @@ public class GameController : MonoBehaviour
     public static int theme;
     public GameObject ThemeLocker;
     public GameObject shop;
+    public GameObject DevopTools;
     public GameObject Tutorial1;
     public GameObject Tutorial2;
     public GameObject Tutorial3;
     public GameObject Sound_CrossMark;
     public Text MMHighScore;
+    private int tap;
+    private bool readyForDoubleTap;
+    private int themeNumberBuffer;
     string subject = "Subject text";
     string body = "Actual text (Link)";
 
@@ -24,21 +28,21 @@ public class GameController : MonoBehaviour
     {
         theme = PlayerPrefs.GetInt("Theme");
         mute = PlayerPrefs.GetInt("Soundpref");
-        if(theme!=1&&theme!=2&&theme!=3)
+        if (theme != 1 && theme != 2 && theme != 3)
         {
             theme = 2;
         }
     }
     private void Start()
     {
-        if(GameObject.Find("UIManager"))
+        if (GameObject.Find("UIManager"))
             UIManager.Instance.ScoreWallet.SetActive(false);
-       // GameObject.Find("PauseMenu").SetActive(false);
-       // GameObject.Find("PauseButton").SetActive(false);
+        // GameObject.Find("PauseMenu").SetActive(false);
+        // GameObject.Find("PauseButton").SetActive(false);
         mute = PlayerPrefs.GetInt("Soundpref");
         SoundIconChanger();
         ThemeLock();
-       
+
         if (PlayerPrefs.GetInt("HighScore") == 0)
         {
             //write tutorial method here
@@ -48,7 +52,7 @@ public class GameController : MonoBehaviour
     }
     public void ThemeLock()
     {
-        if(PlayerPrefs.GetInt("isUnlocked")==5)
+        if (PlayerPrefs.GetInt("isUnlocked") == 5)
         {
             ThemeLocker.SetActive(false);
         }
@@ -61,7 +65,7 @@ public class GameController : MonoBehaviour
 
     public void SoundToggle()
     {
-        
+
         if (mute == 0)
         {
             mute = 1;
@@ -76,7 +80,7 @@ public class GameController : MonoBehaviour
 
     public void SoundIconChanger()
     {
-        if(mute==1)
+        if (mute == 0)
         {
             Sound_CrossMark.SetActive(false);
         }
@@ -90,21 +94,58 @@ public class GameController : MonoBehaviour
     {
         theme = 1;
         SaveTheme(1);
+        Double_click_play(1);
     }
     public void Theme2()
     {
         theme = 2;
         SaveTheme(2);
+        Double_click_play(2);
     }
     public void Theme3()
     {
         theme = 3;
         SaveTheme(3);
+        Double_click_play(3);
     }
     public void SaveTheme(int n)
     {
         PlayerPrefs.SetInt("Theme", n);
     }
+
+    public void Double_click_play(int theme_number)
+    {
+        tap++;
+
+        if (tap == 1)
+        {
+        
+            themeNumberBuffer = theme_number;
+            readyForDoubleTap = true;
+            StartCoroutine(DoubleTapInterval());
+        }
+
+        else if (tap > 1 && readyForDoubleTap && themeNumberBuffer==theme_number)
+        {
+           
+            Play();
+
+            tap = 0;
+            readyForDoubleTap = false;
+        }
+        else
+        {
+            tap = 0;
+            readyForDoubleTap = false;
+        }
+    }
+
+    IEnumerator DoubleTapInterval()
+    {
+        yield return new WaitForSeconds(0.5f);
+        readyForDoubleTap = false;
+    }
+
 
     public void ShopButtonClick()
     {
@@ -114,6 +155,21 @@ public class GameController : MonoBehaviour
     public void ShopCloseButton()
     {
         shop.SetActive(false);
+    }
+
+    public void DevopToolsButton()
+    {
+        DevopTools.SetActive(true);
+    }
+
+    public void ResetData()
+    {
+        PlayerPrefs.DeleteAll();
+        Application.Quit();
+    }
+    public void DevopToolsClose()
+    {
+        DevopTools.SetActive(false);
     }
 
     public void WatchAd()

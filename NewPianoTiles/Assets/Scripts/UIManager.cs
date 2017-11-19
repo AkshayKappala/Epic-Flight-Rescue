@@ -50,7 +50,7 @@ public class UIManager : MonoBehaviour
         setScoreboard();
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(!PauseMenu.activeSelf)
+            if(!PauseMenu.activeSelf&&SceneManager.GetActiveScene().name!="MainMenu")
             {
                 Pause();
             }
@@ -174,13 +174,19 @@ public class UIManager : MonoBehaviour
 
     public void OnApplicationPause(bool pause)
     {
-        Pause();
+
+       if (SceneManager.GetActiveScene().name != "MainMenu")
+        {
+            Pause();
+        }
+
+   
     }
     public void OnApplicationFocus(bool focus)
     {
         if(SceneManager.GetActiveScene().name!="Gameplay")
         {
-            resume();
+            //   resume();
         }
     }
 }
