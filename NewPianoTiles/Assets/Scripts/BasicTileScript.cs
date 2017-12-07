@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-
 public class BasicTileScript : MonoBehaviour
 {
     public static float StartVelocity;
@@ -12,13 +11,19 @@ public class BasicTileScript : MonoBehaviour
     [HideInInspector]
     public bool isfirsttap=false;
     public TileType Tiletype;
-    private AudioClip clip;
+    public AudioClip clip;
     public int themenumber;
     public bool isFirstBlueChute = true;
     public GameObject blueParachute1;
+    public AudioSource AudioSource;
+
     private void Awake()
     {
         themenumber = GameController.theme;
+
+        clip = Resources.Load("ParachuteOpen") as AudioClip;
+        AudioSource = (AudioSource)FindObjectOfType<AudioSource>();
+        AudioSource.loop = false;
     }
     private void Start()
     {
@@ -51,7 +56,8 @@ public class BasicTileScript : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if(!IsPointerOverUIObject())
+        AudioSource.PlayOneShot(clip);
+        if (!IsPointerOverUIObject())
         {
             if (Tiletype == TileType.Red)
             {

@@ -8,12 +8,14 @@ public class GamePlayController : MonoBehaviour
 {
     public int ThemeNumber;
     public GameObject BGMusic;
-    public GameObject Sound_Listener;
+    public GameObject MainCamera;
+    public GameObject Plane;
     public Sprite BG1;
     public Sprite BG2;
     public Sprite BG3;
     private void Awake()
     {
+        SoundManagement();
         ThemeNumber = GameController.theme;
         switch (ThemeNumber)
         {
@@ -24,21 +26,16 @@ public class GamePlayController : MonoBehaviour
 
     }
 
-    public void SoundListenToggle()
+    public void SoundManagement()
     {
-       /* if(PlayerPrefs.GetInt("Soundpref")==0)
-        {
-            Sound_Listener.SetActive(true);
-        }
-        else
-        {
-            Sound_Listener.SetActive(false);
-        }*/
+        MainCamera.GetComponent<AudioSource>().volume = PlayerPrefs.GetInt("Soundpref");
+        Plane.GetComponent<AudioSource>().volume = PlayerPrefs.GetInt("Soundpref") * 0.6f;
+        BGMusic.GetComponent<AudioSource>().volume = PlayerPrefs.GetInt("Soundpref") * 0.6f;
     }
-
-    private void Start()
+    public  void Start()
     {
-        SoundListenToggle();
+        UIManager.Instance.LoadingScreen0.SetActive(false);
+        SoundManagement();
         BGMusic.GetComponent<AudioSource>().PlayDelayed(2);
         UIManager.Instance.ScoreWallet.SetActive(true);
         UIManager.Instance.score = 0;

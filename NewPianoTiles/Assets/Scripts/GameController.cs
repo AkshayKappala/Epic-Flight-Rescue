@@ -10,13 +10,27 @@ public class GameController : MonoBehaviour
 {
     public static int mute;
     public static int theme;
+    public float PopupMaxTime;
+    public float PopupStartTime;
+
+    public GameObject MainCamera;
     public GameObject ThemeLocker;
     public GameObject shop;
     public GameObject DevopTools;
     public GameObject Tutorial1;
     public GameObject Tutorial2;
     public GameObject Tutorial3;
+    public GameObject LoadingScreen;
     public GameObject Sound_CrossMark;
+
+    public GameObject PlayButton;
+    public GameObject ShopButton;
+    public GameObject HelpButton;
+    public GameObject RankButton;
+    public GameObject ShareButton;
+    public GameObject SoundButton;
+
+
     public Text MMHighScore;
     private int tap;
     private bool readyForDoubleTap;
@@ -26,8 +40,12 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        PopupMaxTime = 100;
+        if(Time.realtimeSinceStartup<5)
+            SetPopupInitialScales();
         theme = PlayerPrefs.GetInt("Theme");
         mute = PlayerPrefs.GetInt("Soundpref");
+        MainCamera.GetComponent<AudioSource>().volume = mute;
         if (theme != 1 && theme != 2 && theme != 3)
         {
             theme = 2;
@@ -35,21 +53,64 @@ public class GameController : MonoBehaviour
     }
     private void Start()
     {
+
+        if(UIManager.Instance)
+            UIManager.Instance.LoadingScreen0.SetActive(false);
+        LoadingScreen.SetActive(false);
         if (GameObject.Find("UIManager"))
             UIManager.Instance.ScoreWallet.SetActive(false);
         // GameObject.Find("PauseMenu").SetActive(false);
         // GameObject.Find("PauseButton").SetActive(false);
+        PopupStartTime = Time.realtimeSinceStartup;
         mute = PlayerPrefs.GetInt("Soundpref");
+        MainCamera.GetComponent<AudioSource>().volume = mute;
         SoundIconChanger();
         ThemeLock();
 
-        if (PlayerPrefs.GetInt("HighScore") == 0)
+       /* if (PlayerPrefs.GetInt("HighScore") == 0)
         {
             //write tutorial method here
             TutorialCall();
-        }
+        }*/
         MMHighScore.text = "High Score : " + PlayerPrefs.GetInt("HighScore").ToString();
+        if(Time.realtimeSinceStartup<5)
+            IconsPop();
     }
+
+    private void FixedUpdate()
+    {
+        if (Time.realtimeSinceStartup < PopupMaxTime)
+            UIButtonPopAnimations(Time.realtimeSinceStartup);
+    }
+
+    public void SetPopupInitialScales()
+    {
+        PlayButton.GetComponent<Animator>().enabled = false;
+        ShopButton.GetComponent<Animator>().enabled = false;
+        HelpButton.GetComponent<Animator>().enabled = false;
+        ShareButton.GetComponent<Animator>().enabled = false;
+        SoundButton.GetComponent<Animator>().enabled = false;
+        RankButton.GetComponent<Animator>().enabled = false;
+        PlayButton.transform.localScale = new Vector3(0, 0, 0);
+        ShopButton.transform.localScale = new Vector3(0, 0, 0);
+        HelpButton.transform.localScale = new Vector3(0, 0, 0);
+        ShareButton.transform.localScale = new Vector3(0, 0, 0);
+        SoundButton.transform.localScale = new Vector3(0, 0, 0);
+        RankButton.transform.localScale = new Vector3(0, 0, 0);
+    }
+
+
+    public void IconsPop()
+    {
+        GameObject.Find("ButtonPlay").GetComponent<Animator>().Play("ButtonPlaypop");
+        GameObject.Find("GooglePlay").GetComponent<Animator>().Play("googleplaypop");
+        GameObject.Find("ShopButton").GetComponent<Animator>().Play("shopbuttonpop");
+        GameObject.Find("SoundIcon").GetComponent<Animator>().Play("soundiconpop");
+        GameObject.Find("HelpButton").GetComponent<Animator>().Play("helpbuttonpop");
+        GameObject.Find("ShareButton").GetComponent<Animator>().Play("sharebuttonpop");
+    }
+
+
     public void ThemeLock()
     {
         if (PlayerPrefs.GetInt("isUnlocked") == 5)
@@ -60,7 +121,16 @@ public class GameController : MonoBehaviour
 
     public void Play()
     {
-        SceneManager.LoadScene("GamePlay", LoadSceneMode.Single);
+
+        if (PlayerPrefs.GetInt("HighScore") == 0)
+        {
+            TutorialCall();
+        }
+        else
+        {
+            LoadingScreen.SetActive(true);
+            SceneManager.LoadScene("GamePlay", LoadSceneMode.Single);
+        }
     }
 
     public void SoundToggle()
@@ -75,12 +145,13 @@ public class GameController : MonoBehaviour
             mute = 0;
         }
         PlayerPrefs.SetInt("Soundpref", mute);
+        MainCamera.GetComponent<AudioSource>().volume = mute;
         SoundIconChanger();
     }
 
     public void SoundIconChanger()
     {
-        if (mute == 0)
+        if (mute == 1)
         {
             Sound_CrossMark.SetActive(false);
         }
@@ -154,7 +225,9 @@ public class GameController : MonoBehaviour
 
     public void ShopCloseButton()
     {
-        shop.SetActive(false);
+        shop.GetComponent<Animator>().Play("ShopClose");
+        StartCoroutine(ShopClose());
+      //  shop.SetActive(false);
     }
 
     public void DevopToolsButton()
@@ -186,6 +259,13 @@ public class GameController : MonoBehaviour
         }
     }*/
 
+
+    IEnumerator ShopClose()
+    {
+        yield return new WaitForSecondsRealtime(0.15f);
+        shop.SetActive(false);
+    }
+
     public void TutorialCall()
     {
         if (!Tutorial1.activeSelf && !Tutorial2.activeSelf && !Tutorial3.activeSelf)
@@ -206,8 +286,57 @@ public class GameController : MonoBehaviour
         else if (!Tutorial1.activeSelf && !Tutorial2.activeSelf && Tutorial3.activeSelf)
         {
             Tutorial3.SetActive(false);
+            LoadingScreen.SetActive(true);
+            //play code here
+            SceneManager.LoadScene("GamePlay", LoadSceneMode.Single);
         }
     }
+
+
+    public void UIButtonPopAnimations(float currentTime)
+    {
+
+        
+
+        if(currentTime>=PopupStartTime&&currentTime<=PopupStartTime+0.2f)
+        {
+            PlayButton.transform.localScale = new Vector3(2,2, 1) + (new Vector3(1, 1, 0) * (currentTime -PopupStartTime)*2.5f);
+        }
+        else if(currentTime>=PopupStartTime+0.2f && currentTime<=PopupStartTime+0.4f)
+        {
+            ShopButton.transform.localScale = new Vector3(0.8f, 0.8f, 1) + (new Vector3(1, 1, 0) * (currentTime - PopupStartTime-0.2f) *2.5f);
+        }
+        else if(currentTime>=PopupStartTime+0.4f && currentTime<=PopupStartTime+0.6f)
+        {
+            HelpButton.transform.localScale = new Vector3(0.5f, 0.5f, 1) + (new Vector3(1, 1, 0) * (currentTime - PopupStartTime-0.4f) *2.5f);
+        }
+        else if (currentTime >= PopupStartTime+0.6f && currentTime <= PopupStartTime+0.8f)
+        {
+            RankButton.transform.localScale = new Vector3(0.8f, 0.8f, 1) + (new Vector3(1, 1, 0) * (currentTime - PopupStartTime-0.6f) *2.5f);
+        }
+        else if (currentTime >= PopupStartTime+0.8f && currentTime <= PopupStartTime+1.0f)
+        {
+            ShareButton.transform.localScale = new Vector3(0.8f, 0.8f, 1) + (new Vector3(1, 1, 0) * (currentTime - PopupStartTime-0.8f) *2.5f);
+        }
+        else if (currentTime >= PopupStartTime+1.0f && currentTime <= PopupStartTime+1.2f)
+        {
+            SoundButton.transform.localScale = new Vector3(0.5f, 0.5f, 1) + (new Vector3(1, 1, 0) * (currentTime - PopupStartTime-1.0f) *2.5f);
+        }
+
+
+        if(Time.realtimeSinceStartup>PopupStartTime+1.2f)
+        {
+            PlayButton.GetComponent<Animator>().enabled = true;
+            ShopButton.GetComponent<Animator>().enabled = true;
+            HelpButton.GetComponent<Animator>().enabled = true;
+            ShareButton.GetComponent<Animator>().enabled = true;
+            SoundButton.GetComponent<Animator>().enabled = true;
+            RankButton.GetComponent<Animator>().enabled = true;
+        }
+
+
+    }
+
 
     //RATE AND SHARE CODE FROM HERE(DUMPED FROM NET)
 

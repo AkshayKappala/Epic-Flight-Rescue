@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public GameObject PauseMenu;
     public GameObject PauseButton;
     public GameObject GameOverMenu;
+    public GameObject LoadingScreen0;
     public GameObject ScoreWallet;
     public GameObject GameOverLayer;
     public GameObject NoCoins;
@@ -70,11 +71,25 @@ public class UIManager : MonoBehaviour
 
     public void CloseGameOverMenu()
     {
+        StartCoroutine(CloseGameoverMenuio());
+        Time.timeScale = 1;
+        GameOverMenu.GetComponent<Animator>().Play("GameOverMenuClose");
+    }
+
+    IEnumerator CloseGameoverMenuio()
+    {
+        yield return new WaitForSeconds(0.21f);
         NoCoins.SetActive(false);
         PauseButton.SetActive(true);
         GameOverMenu.SetActive(false);
-        Time.timeScale = 1;
+
         StartCoroutine(CloseGameOverLayer());
+    }
+
+    IEnumerator CloseGameOverLayer()
+    {
+        yield return new WaitForSeconds(0.1f);
+        GameOverLayer.SetActive(false);
     }
 
     public void Pause()
@@ -92,16 +107,26 @@ public class UIManager : MonoBehaviour
     public void resume()
     {
       //  GameObject.Find("BackgroundImage").transform.Translate(Vector3.down * 5.5f);
+
+        Time.timeScale = 1;
+        StartCoroutine(CloseGameOverLayer());
+        StartCoroutine(resumeio());
+        PauseMenu.GetComponent<Animator>().Play("PauseClose");
+    }
+
+    IEnumerator resumeio()
+    {
+        yield return new WaitForSeconds(0.2f);
         GameObject.Find("BackgroundImage").transform.Translate(Vector3.down * BasicTileScript.StartVelocity * 2);
         PauseButton.SetActive(true);
         PauseMenu.SetActive(false);
-        Time.timeScale = 1;
-        StartCoroutine(CloseGameOverLayer());
     }
+
 
     public void gotomenu()
     {
         resume();
+        LoadingScreen0.SetActive(true);
         /*PauseButton.SetActive(false);
         PauseMenu.SetActive(false);*/
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
@@ -131,8 +156,11 @@ public class UIManager : MonoBehaviour
 
     public void AdnRevive()
     {
-        Economy.coins += 100;
-        PlayerPrefs.SetInt("Coins", Economy.coins);
+       /* Economy.coins += 100;
+        PlayerPrefs.SetInt("Coins", Economy.coins);*/
+
+        //play ad here
+
         CloseGameOverMenu();
         GameObject.Find("BackgroundImage").transform.Translate(Vector3.down * BasicTileScript.StartVelocity * 2);
     }
@@ -160,11 +188,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    IEnumerator CloseGameOverLayer()
-    {
-        yield return new WaitForSeconds(0.1f);
-        GameOverLayer.SetActive(false);
-    }
+
 
     IEnumerator ShowGameOverMenuIE()
     {
@@ -188,5 +212,6 @@ public class UIManager : MonoBehaviour
         {
             //   resume();
         }
+        
     }
 }
