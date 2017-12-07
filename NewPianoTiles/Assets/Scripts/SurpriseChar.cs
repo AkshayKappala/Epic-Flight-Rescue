@@ -8,6 +8,8 @@ public class SurpriseChar : MonoBehaviour
     public float selector;
     public GameObject GeneratedChar;
     public int themenumber;
+    public AudioClip clip;
+    public AudioSource AudioSource;
     private void Awake()
     {
         themenumber = GameController.theme;
@@ -15,6 +17,9 @@ public class SurpriseChar : MonoBehaviour
     public void Start()
     {
         selector = Random.Range(1, 5);
+        clip = Resources.Load("ParachuteOpen") as AudioClip;
+        AudioSource = (AudioSource)FindObjectOfType<AudioSource>();
+        AudioSource.loop = false;
     }
     void Update()
     {
@@ -23,6 +28,7 @@ public class SurpriseChar : MonoBehaviour
 
     private void OnMouseDown()
     {
+        AudioSource.PlayOneShot(clip);
         if (!IsPointerOverUIObject())
         {
             if (selector < 3)
